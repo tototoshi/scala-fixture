@@ -19,8 +19,8 @@ class FixtureTest extends FunSuite with BeforeAndAfter {
 
   val fixture = Fixture(driver, url, username, password)
     .scriptLocation("db/fixtures/default")
-    .scriptPackage("com.github.tototoshi.fixture")
-    .scripts(Seq("script1.sql", "script2.sql", "TestFixtureScript"))
+    .scriptPackage("com.example.fixtures")
+    .scripts(Seq("script1.sql", "script2.sql", "MyFixtureScript"))
 
   before {
     fixture.setUp()
@@ -88,7 +88,7 @@ class TestFixtureScript extends FixtureScript {
 }
 ```
 
-If you define `com.example.MyFixtureScript`. You can specify it like `.scripts(Seq("com.example.MyFixtureScript"))` or `.scriptPackage("com.example").scripts(Seq("MyFixtureScript"))`.
+If you define `com.example.MyFixtureScript`. You can specify it like `.scripts(Seq("com.example.MyFixtureScript"))` or `.scriptPackage("com.example.fixtures").scripts(Seq("MyFixtureScript"))`.
 
 SQL fixture script and Java(Scala)-based Fixture script can be used in mixture. When SQL script not found, this library tries to find Java-based script. So you can write like the following.
 
@@ -96,8 +96,8 @@ SQL fixture script and Java(Scala)-based Fixture script can be used in mixture. 
 ```scala
   val fixture = Fixture(driver, url, username, password)
     .scriptLocation("db/fixtures/default")
-    .scriptPackage("com.github.tototoshi.fixture")
-    .scripts(Seq("script1.sql", "script2.sql", "TestFixtureScript"))
+    .scriptPackage("com.example")
+    .scripts(Seq("script1.sql", "script2.sql", "MyFixtureScript"))
 ```
 
 
