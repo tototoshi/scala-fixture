@@ -15,9 +15,9 @@ class FixtureTest extends FunSuite with BeforeAndAfter {
   flyway.setLocations("db/migration/default")
 
   val fixture = Fixture(driver, url, username, password)
-      .scriptLocation("db/fixtures/default")
-      .scriptPackage("com.github.tototoshi.fixture")
-      .scripts(Seq("script1.sql", "script2.sql", "TestFixtureScript"))
+    .scriptLocation("db/fixtures/default")
+    .scriptPackage("com.github.tototoshi.fixture")
+    .scripts(Seq("script1.sql", "script2.sql", "TestFixtureScript"))
 
   before {
     flyway.migrate()
