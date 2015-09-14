@@ -2,7 +2,7 @@ scalariformSettings
 
 name := """scala-fixture"""
 
-version := "0.1.0-SNAPSHOT"
+version := "0.1.0"
 
 scalaVersion := "2.11.7"
 

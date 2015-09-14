@@ -6,7 +6,7 @@ simple fixture for scala
 ## Install
 
 ```scala
-libraryDependencies += "com.github.tototoshi" %% "scala-fixture" % "0.1.0-SNAPSHOT"
+libraryDependencies += "com.github.tototoshi" %% "scala-fixture" % "0.1.0"
 ```
 
 
