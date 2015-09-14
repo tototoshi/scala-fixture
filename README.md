@@ -83,6 +83,7 @@ Define the class that extends `com.github.tototoshi.fixture.FixtureScript` and i
 package com.example.fixtures
 
 import java.sql.Connection
+import com.github.tototoshi.fixture.FixtureScript
 
 class MyFixtureScript extends FixtureScript {
 
