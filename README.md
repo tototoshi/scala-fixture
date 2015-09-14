@@ -16,6 +16,7 @@ libraryDependencies += "com.github.tototoshi" %% "scala-fixture" % "0.1.0"
 package com.github.tototoshi.fixture
 
 import org.scalatest.{ BeforeAndAfter, FunSuite }
+import com.github.tototoshi.fixture._
 
 class FixtureTest extends FunSuite with BeforeAndAfter {
 
