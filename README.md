@@ -66,7 +66,7 @@ The location can be specified by `Fixture#scriptLocation`.
 ```
 
 
-### Java-based fixture script
+### Java(Scala)-based fixture script
 
 Java-based fixture script is also available for the time you want to write a little complicated one.
 Define the class that extends `com.github.tototoshi.fixture.FixtureScript` and implement `setUp` and `tearDown`
@@ -86,6 +86,18 @@ class TestFixtureScript extends FixtureScript {
   }
 
 }
+```
+
+If you define `com.example.MyFixtureScript`. You can specify it like `.scripts(Seq("com.example.MyFixtureScript"))` or `.scriptPackage("com.example").scripts(Seq("MyFixtureScript"))`.
+
+SQL fixture script and Java(Scala)-based Fixture script can be used in mixture. When SQL script not found, this library tries to find Java-based script. So you can write like the following.
+
+
+```scala
+  val fixture = Fixture(driver, url, username, password)
+    .scriptLocation("db/fixtures/default")
+    .scriptPackage("com.github.tototoshi.fixture")
+    .scripts(Seq("script1.sql", "script2.sql", "TestFixtureScript"))
 ```
 
 
