@@ -73,9 +73,11 @@ Define the class that extends `com.github.tototoshi.fixture.FixtureScript` and i
 
 
 ```java
+package com.example.fixtures
+
 import java.sql.Connection
 
-class TestFixtureScript extends FixtureScript {
+class MyFixtureScript extends FixtureScript {
 
   override def setUp(connection: Connection): Unit = {
     connection.prepareStatement("insert into users(id, name) values (3, 'user3')").execute()
