@@ -79,7 +79,7 @@ Java-based fixture script is also available for the time you want to write a lit
 Define the class that extends `com.github.tototoshi.fixture.FixtureScript` and implement `setUp` and `tearDown`
 
 
-```java
+```scala
 package com.example.fixtures
 
 import java.sql.Connection
