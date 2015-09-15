@@ -18,7 +18,7 @@ case class Fixture(
 
   def scriptPackage(scriptPackage: String): Fixture = this.copy(scriptPackage = scriptPackage)
 
-  private def loadScripts(): Seq[FixtureScript] = {
+  private[fixture] def scan(): Seq[FixtureScript] = {
     val sqlScanner = new SQLFixtureScriptScanner(classLoader, scriptLocation)
     val javaScanner = new JavaFixtureScriptScanner(classLoader, scriptPackage)
     scripts.map { script =>
@@ -31,13 +31,13 @@ case class Fixture(
   def setUp(): Unit = {
     val db = new Database(driver, url, username, password)
     val conn = db.getConnection()
-    loadScripts.foreach { script => script.setUp(conn) }
+    scan.foreach { script => script.setUp(conn) }
   }
 
   def tearDown(): Unit = {
     val db = new Database(driver, url, username, password)
     val conn = db.getConnection()
-    loadScripts.foreach { script => script.tearDown(conn) }
+    scan.foreach { script => script.tearDown(conn) }
   }
 
 }
