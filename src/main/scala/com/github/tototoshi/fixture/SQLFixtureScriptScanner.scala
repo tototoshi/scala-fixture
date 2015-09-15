@@ -14,7 +14,7 @@ private[fixture] class SQLFixtureScriptScanner(classLoader: ClassLoader, resourc
   def scan(scriptName: String): Option[SQLFixtureScript] = {
     val resource = createResourcePath(resourceLocation, scriptName)
     val path = Option(classLoader.getResource(resource)).map(resource => Paths.get(resource.toURI))
-    path.map(p => SQLFixtureScript(new String(Files.readAllBytes(p), "UTF-8")))
+    path.map(p => SQLFixtureScript(resource, new String(Files.readAllBytes(p), "UTF-8")))
   }
 
 }

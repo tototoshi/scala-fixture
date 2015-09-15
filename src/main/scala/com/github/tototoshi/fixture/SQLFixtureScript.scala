@@ -3,7 +3,7 @@ package com.github.tototoshi.fixture
 import java.sql.Connection
 
 // Almost taken from scalikejdbc-play-fixture
-private[fixture] case class SQLFixtureScript(content: String) extends FixtureScript {
+private[fixture] case class SQLFixtureScript(override val name: String, content: String) extends FixtureScript {
 
   private def isSetUpMarker(s: String): Boolean = s.matches("""^#.*!(SetUp|Ups).*$""")
 

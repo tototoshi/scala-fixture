@@ -27,6 +27,14 @@ class FixtureTest extends FunSuite with BeforeAndAfter {
     flyway.clean()
   }
 
+  test("scan fixture scripts") {
+    val scripts = fixture.scan()
+    assert(scripts.size === 3)
+    assert(scripts(0).name === "db/fixtures/default/script1.sql")
+    assert(scripts(1).name === "db/fixtures/default/script2.sql")
+    assert(scripts(2).name === "com.github.tototoshi.fixture.TestFixtureScript")
+  }
+
   test("load fixtures") {
     fixture.setUp()
 

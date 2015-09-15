@@ -13,7 +13,7 @@ class SQLFixtureScriptScannerTest extends FunSuite {
   }
 
   test("scan from files classpath") {
-    assert(scanner.scan("test.txt") === Some(SQLFixtureScript("test")))
+    assert(scanner.scan("test.txt") === Some(SQLFixtureScript("test.txt", "test")))
   }
 
 }
