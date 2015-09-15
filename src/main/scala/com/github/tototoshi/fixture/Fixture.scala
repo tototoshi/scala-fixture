@@ -37,7 +37,7 @@ case class Fixture(
   def tearDown(): Unit = {
     val db = new Database(driver, url, username, password)
     val conn = db.getConnection()
-    scan.foreach { script => script.tearDown(conn) }
+    scan.reverse.foreach { script => script.tearDown(conn) }
   }
 
 }
