@@ -9,7 +9,7 @@ private[fixture] class JavaFixtureScriptScanner(classLoader: ClassLoader, script
       val className = if (scriptPackage == "") scriptName else scriptPackage + "." + scriptName
       Some(Class.forName(className, true, classLoader).newInstance().asInstanceOf[FixtureScript])
     } catch {
-      case NonFatal(e) => None
+      case e: ClassNotFoundException => None
     }
   }
 
