@@ -14,7 +14,7 @@ case class Fixture(
 
   def scripts(scripts: Seq[String]): Fixture = this.copy(scripts = scripts)
 
-  def scriptLocation(scriptPrefix: String): Fixture = this.copy(scriptLocation = scriptPrefix)
+  def scriptLocation(scriptLocation: String): Fixture = this.copy(scriptLocation = scriptLocation)
 
   def scriptPackage(scriptPackage: String): Fixture = this.copy(scriptPackage = scriptPackage)
 
@@ -57,4 +57,3 @@ case class Fixture(
   }
 
 }
-
