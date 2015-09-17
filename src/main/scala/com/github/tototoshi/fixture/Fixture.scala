@@ -30,14 +30,30 @@ case class Fixture(
 
   def setUp(): Unit = {
     val db = new Database(driver, url, username, password)
-    val conn = db.getConnection()
-    scan.foreach { script => script.setUp(conn) }
+    using(db.getConnection()) { conn =>
+      scan.foreach { script => script.setUp(conn) }
+    }
   }
 
   def tearDown(): Unit = {
     val db = new Database(driver, url, username, password)
-    val conn = db.getConnection()
-    scan.reverse.foreach { script => script.tearDown(conn) }
+    using(db.getConnection()) { conn =>
+      scan.reverse.foreach { script => script.tearDown(conn) }
+    }
+  }
+
+  private[this] type Closable = { def close() }
+
+  private[this] def using[R <: Closable, A](resource: R)(f: R => A): A = {
+    try {
+      f(resource)
+    } finally {
+      try {
+        resource.close()
+      } catch {
+        case scala.util.control.NonFatal(_) =>
+      }
+    }
   }
 
 }
