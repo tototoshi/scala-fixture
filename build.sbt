@@ -63,3 +63,11 @@ lazy val play = Project(
     "com.typesafe.play" %% "play" % "2.4.6" % "provided"
   )
 ).settings(commonSettings ++ publishSettings).dependsOn(core)
+
+lazy val playapp = Project(
+  id = "playapp",
+  base = file("playapp")
+).enablePlugins(PlayScala).settings(
+  name := "scala-fixture-playapp",
+  routesGenerator := InjectedRoutesGenerator
+).settings(commonSettings ++ publishSettings).dependsOn(play)
