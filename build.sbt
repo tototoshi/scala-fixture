@@ -33,20 +33,33 @@ lazy val publishSettings = Seq(
 )
 
 
-lazy val core = Project(
-  id = "core",
-  base = file("core")
-).settings(
-  name := """scala-fixture""",
+lazy val commonSettings = Seq(
   version := "0.1.2",
   scalaVersion := "2.11.7",
   crossScalaVersions := Seq("2.10.5", "2.11.7"),
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
-  parallelExecution in Test := false,
+  parallelExecution in Test := false
+)
+
+lazy val core = Project(
+  id = "core",
+  base = file("core")
+).settings(
+  name := "scala-fixture",
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
     "org.scalatest" %% "scalatest" % "2.2.5" % "test",
     "org.flywaydb" % "flyway-core" % "3.2.1" % "test"
   )
-).settings(publishSettings)
+).settings(commonSettings ++ publishSettings)
+
+lazy val play = Project(
+  id = "play",
+  base = file("play")
+).settings(
+  name := "scala-fixture-play",
+  libraryDependencies ++= Seq(
+    "com.typesafe.play" %% "play" % "2.4.6" % "provided"
+  )
+).settings(commonSettings ++ publishSettings).dependsOn(core)
