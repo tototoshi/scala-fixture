@@ -12,7 +12,7 @@ import play.core.{BuildLink, WebCommands, HandleWebCommandSupport}
 class FixtureWebCommandHandler extends HandleWebCommandSupport {
   def handleWebCommand(request: RequestHeader, buildLink: BuildLink, path: File): Option[Result] = {
     request.path match {
-      case """/@fixture""" => Some(Results.Ok("Hi"))
+      case """/@fixture""" => Some(Results.Ok(views.html.index()))
       case _ => None
     }
   }
@@ -32,4 +32,3 @@ class FixtureWebCommandModule extends Module {
     Seq(bind[FixtureWebCommand].toProvider[FixtureWebCommandProvider].eagerly)
   }
 }
-
