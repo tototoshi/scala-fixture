@@ -3,28 +3,64 @@ package com.github.tototoshi.fixture.play
 import java.io.File
 import javax.inject.{Provider, Inject, Singleton}
 
+import com.github.tototoshi.fixture.Fixture
 import play.api.{Configuration, Environment}
 import play.api.inject.{Binding, Module}
-import play.api.mvc.{Result, RequestHeader, Results}
+import play.api.mvc.{Result, RequestHeader}
+import play.api.mvc.Results._
 import play.core.{BuildLink, WebCommands, HandleWebCommandSupport}
 
+class FixtureWebCommandHandler(configuration: Configuration) extends HandleWebCommandSupport {
 
-class FixtureWebCommandHandler extends HandleWebCommandSupport {
   def handleWebCommand(request: RequestHeader, buildLink: BuildLink, path: File): Option[Result] = {
     request.path match {
-      case """/@fixture""" => Some(Results.Ok(views.html.index()))
+      case "/@fixture" => Some(Ok(views.html.index()))
+      case "/@fixture/setUp" =>
+        createFixture(configuration).setUp()
+        Some(Redirect("/@fixture"))
+      case "/@fixture/tearDown" =>
+        createFixture(configuration).tearDown()
+        Some(Redirect("/@fixture"))
       case _ => None
     }
   }
+
+  private def createFixture(configuration: Configuration): Fixture = {
+    val driver = getStringConfiguration(configuration, "db.default.driver")
+    val url = getStringConfiguration(configuration, "db.default.url")
+    val username = getStringConfiguration(configuration, "db.default.username")
+    val password = getStringConfiguration(configuration, "db.default.password")
+
+    // scala-fixture specific configuration
+    val scriptLocation = getStringConfiguration(configuration, "db.default.fixture.scriptLocation")
+    val scriptPackage = getStringConfiguration(configuration, "db.default.fixture.scriptPackage")
+    val scripts = getStringSeqConfiguration(configuration, "db.default.fixture.scripts")
+
+    Fixture(driver, url, username, password)
+      .scriptLocation(scriptLocation)
+      .scriptPackage(scriptPackage)
+      .scripts(scripts)
+  }
+
+  private def getStringConfiguration(configuration: Configuration, key: String): String =
+    configuration.getString(key).getOrElse(sys.error(s"Configuration of ${key} is missing"))
+
+  private def getStringSeqConfiguration(configuration: Configuration, key: String): Seq[String] = {
+    import scala.collection.JavaConverters._
+    configuration.getStringList(key).getOrElse(sys.error(s"Configuration of ${key} is missing")).asScala
+  }
+
+
 }
 
-class FixtureWebCommand @Inject() (webCommand: WebCommands) {
-  webCommand.addHandler(new FixtureWebCommandHandler())
+class FixtureWebCommand @Inject() (configuration: Configuration, webCommand: WebCommands) {
+  webCommand.addHandler(new FixtureWebCommandHandler(configuration))
 }
 
 @Singleton
-class FixtureWebCommandProvider @Inject() (webCommands: WebCommands) extends Provider[FixtureWebCommand] {
-  override def get(): FixtureWebCommand = new FixtureWebCommand(webCommands)
+class FixtureWebCommandProvider @Inject() (configuration: Configuration, webCommands: WebCommands)
+    extends Provider[FixtureWebCommand] {
+  override def get(): FixtureWebCommand = new FixtureWebCommand(configuration, webCommands)
 }
 
 class FixtureWebCommandModule extends Module {
