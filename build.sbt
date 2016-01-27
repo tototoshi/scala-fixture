@@ -69,5 +69,9 @@ lazy val playapp = Project(
   base = file("playapp")
 ).enablePlugins(PlayScala).settings(
   name := "scala-fixture-playapp",
-  routesGenerator := InjectedRoutesGenerator
+  routesGenerator := InjectedRoutesGenerator,
+  libraryDependencies ++= Seq(
+    "org.flywaydb" %% "flyway-play" % "2.2.1",
+    jdbc
+  )
 ).settings(commonSettings ++ publishSettings).dependsOn(play)
