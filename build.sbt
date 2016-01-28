@@ -72,6 +72,9 @@ lazy val playapp = Project(
   routesGenerator := InjectedRoutesGenerator,
   libraryDependencies ++= Seq(
     "org.flywaydb" %% "flyway-play" % "2.2.1",
-    jdbc
+    jdbc,
+    "org.scalikejdbc" %% "scalikejdbc"                  % "2.3.4",
+    "org.scalikejdbc" %% "scalikejdbc-config"           % "2.3.4",
+    "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.3"
   )
 ).settings(commonSettings ++ publishSettings).dependsOn(play)
