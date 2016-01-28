@@ -36,14 +36,16 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
     val password = getStringConfiguration(configuration, "db.default.password")
 
     // scala-fixture specific configuration
-    val scriptLocation = getStringConfiguration(configuration, "db.default.fixture.scriptLocation")
-    val scriptPackage = getStringConfiguration(configuration, "db.default.fixture.scriptPackage")
+    val scriptLocation = configuration.getString("db.default.fixture.scriptLocation").getOrElse("db/fixtures/default")
+    val scriptPackage = configuration.getString("db.default.fixture.scriptPackage")
     val scripts = getStringSeqConfiguration(configuration, "db.default.fixture.scripts")
 
-    Fixture(driver, url, username, password)
-      .scriptLocation(scriptLocation)
-      .scriptPackage(scriptPackage)
-      .scripts(scripts)
+    val fixture = Fixture(driver, url, username, password).scriptLocation(scriptLocation)
+
+    scriptPackage match {
+      case Some(p) => fixture.scriptPackage(p).scripts(scripts)
+      case None => fixture.scripts(scripts)
+    }
   }
 
   private def isDev(environment: Environment): Boolean = environment.mode == Mode.Dev
