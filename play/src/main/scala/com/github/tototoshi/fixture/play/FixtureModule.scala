@@ -30,22 +30,20 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
   }
 
   private def createFixture(configuration: Configuration): Fixture = {
-    val driver = getStringConfiguration(configuration, "db.default.driver")
-    val url = getStringConfiguration(configuration, "db.default.url")
-    val username = getStringConfiguration(configuration, "db.default.username")
-    val password = getStringConfiguration(configuration, "db.default.password")
+    val configurationReader = new ConfigurationReader(configuration)
+    val fixtureConfigurations = configurationReader.getFixtureConfigurations
+    fixtureConfigurations.get("default") match {
+      case Some(config) =>
+        val dbConfig = config.database
+        val fixture = Fixture(dbConfig.driver, dbConfig.url, dbConfig.username, dbConfig.password).scriptLocation(config.scriptLocation)
 
-    // scala-fixture specific configuration
-    val scriptLocation = configuration.getString("db.default.fixture.scriptLocation").getOrElse("db/fixtures/default")
-    val scriptPackage = configuration.getString("db.default.fixture.scriptPackage")
-    val scripts = getStringSeqConfiguration(configuration, "db.default.fixture.scripts")
-
-    val fixture = Fixture(driver, url, username, password).scriptLocation(scriptLocation)
-
-    scriptPackage match {
-      case Some(p) => fixture.scriptPackage(p).scripts(scripts)
-      case None => fixture.scripts(scripts)
+        config.scriptPackage match {
+          case Some(p) => fixture.scriptPackage(p).scripts(config.scripts)
+          case None => fixture.scripts(config.scripts)
+        }
+      case None => sys.error("configuration error")
     }
+
   }
 
   private def isDev(environment: Environment): Boolean = environment.mode == Mode.Dev
@@ -58,6 +56,47 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
     configuration.getStringList(key).getOrElse(sys.error(s"Configuration of ${key} is missing")).asScala
   }
 
+}
+
+case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)
+case class FixtureConfiguration(database: DatabaseConfiguration, scriptLocation: String, scriptPackage: Option[String], scripts: Seq[String])
+
+class ConfigurationReader(configuration: Configuration) {
+
+  def getFixtureConfigurations: Map[String, FixtureConfiguration] = {
+    getAllDatabaseNames.map { databaseName => (databaseName, getFixtureConfiguration(databaseName)) }.toMap
+  }
+
+  private def getFixtureConfiguration(databaseName: String): FixtureConfiguration = {
+    val driver = getStringConfiguration(configuration, s"db.${databaseName}.driver")
+    val url = getStringConfiguration(configuration, s"db.${databaseName}.url")
+    val username = getStringConfiguration(configuration, s"db.${databaseName}.username")
+    val password = getStringConfiguration(configuration, s"db.${databaseName}.password")
+
+    val databaseConfiguration = DatabaseConfiguration(driver, url, username, password)
+
+    // scala-fixture specific configuration
+    val scriptLocation = configuration.getString(s"db.${databaseName}.fixture.scriptLocation").getOrElse(s"db/fixtures/${databaseName}")
+    val scriptPackage = configuration.getString(s"db.${databaseName}.fixture.scriptPackage")
+    val scripts = getStringSeqConfiguration(configuration, s"db.${databaseName}.fixture.scripts")
+
+    FixtureConfiguration(databaseConfiguration, scriptLocation, scriptPackage, scripts)
+  }
+
+  private def getAllDatabaseNames: Seq[String] = (for {
+    config <- configuration.getConfig("db").toList
+    dbName <- config.subKeys
+  } yield {
+    dbName
+  }).distinct
+
+  private def getStringConfiguration(configuration: Configuration, key: String): String =
+    configuration.getString(key).getOrElse(sys.error(s"Configuration of ${key} is missing"))
+
+  private def getStringSeqConfiguration(configuration: Configuration, key: String): Seq[String] = {
+    import scala.collection.JavaConverters._
+    configuration.getStringList(key).getOrElse(sys.error(s"Configuration of ${key} is missing")).asScala
+  }
 
 }
 
