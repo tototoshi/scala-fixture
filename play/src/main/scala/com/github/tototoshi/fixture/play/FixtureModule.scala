@@ -47,15 +47,7 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
   }
 
   private def isDev(environment: Environment): Boolean = environment.mode == Mode.Dev
-
-  private def getStringConfiguration(configuration: Configuration, key: String): String =
-    configuration.getString(key).getOrElse(sys.error(s"Configuration of ${key} is missing"))
-
-  private def getStringSeqConfiguration(configuration: Configuration, key: String): Seq[String] = {
-    import scala.collection.JavaConverters._
-    configuration.getStringList(key).getOrElse(sys.error(s"Configuration of ${key} is missing")).asScala
-  }
-
+  
 }
 
 case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)
