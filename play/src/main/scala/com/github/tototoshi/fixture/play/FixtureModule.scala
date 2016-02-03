@@ -12,27 +12,38 @@ import play.core.{BuildLink, WebCommands, HandleWebCommandSupport}
 
 class FixtureWebCommandHandler(configuration: Configuration, environment: Environment) extends HandleWebCommandSupport {
 
+  val configurationReader = new ConfigurationReader(configuration)
+
+  object Path {
+    def unapplySeq(s: String): Option[Seq[String]] =
+      if (s.trim.isEmpty) {
+        None
+      } else {
+        Some(s.split("/").dropWhile(_.isEmpty).takeWhile(_.nonEmpty))
+      }
+  }
+
   def handleWebCommand(request: RequestHeader, buildLink: BuildLink, path: File): Option[Result] = {
     if (!isDev(environment)) {
       None
     } else {
       request.path match {
-        case "/@fixture" => Some(Ok(views.html.index()))
-        case "/@fixture/setUp" =>
-          createFixture(configuration).setUp()
-          Some(Redirect("/@fixture"))
-        case "/@fixture/tearDown" =>
-          createFixture(configuration).tearDown()
-          Some(Redirect("/@fixture"))
+        case Path("@fixture") => Some(Ok(views.html.index(configurationReader.getAllDatabaseNames)))
+        case Path("@fixture", dbName) => Some(Ok(views.html.show(dbName)))
+        case Path("@fixture", dbName, "setUp") =>
+          createFixture(configuration, dbName).setUp()
+          Some(Redirect(s"/@fixture/${dbName}"))
+        case Path("@fixture", dbName, "tearDown") =>
+          createFixture(configuration, dbName).tearDown()
+          Some(Redirect(s"/@fixture/${dbName}"))
         case _ => None
       }
     }
   }
 
-  private def createFixture(configuration: Configuration): Fixture = {
-    val configurationReader = new ConfigurationReader(configuration)
+  private def createFixture(configuration: Configuration, dbName: String): Fixture = {
     val fixtureConfigurations = configurationReader.getFixtureConfigurations
-    fixtureConfigurations.get("default") match {
+    fixtureConfigurations.get(dbName) match {
       case Some(config) =>
         val dbConfig = config.database
         val fixture = Fixture(dbConfig.driver, dbConfig.url, dbConfig.username, dbConfig.password).scriptLocation(config.scriptLocation)
@@ -41,13 +52,12 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
           case Some(p) => fixture.scriptPackage(p).scripts(config.scripts)
           case None => fixture.scripts(config.scripts)
         }
-      case None => sys.error("configuration error")
+      case None => sys.error(s"Configuration of Database \"${dbName}\" is missing")
     }
-
   }
 
   private def isDev(environment: Environment): Boolean = environment.mode == Mode.Dev
-  
+
 }
 
 case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)
@@ -75,7 +85,7 @@ class ConfigurationReader(configuration: Configuration) {
     FixtureConfiguration(databaseConfiguration, scriptLocation, scriptPackage, scripts)
   }
 
-  private def getAllDatabaseNames: Seq[String] = (for {
+  def getAllDatabaseNames: Seq[String] = (for {
     config <- configuration.getConfig("db").toList
     dbName <- config.subKeys
   } yield {
