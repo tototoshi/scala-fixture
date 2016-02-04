@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{ Action, Controller }
 import scalikejdbc._
 
 class Application extends Controller {

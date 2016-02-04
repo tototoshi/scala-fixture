@@ -1,5 +1,3 @@
-scalariformSettings
-
 def _publishTo(v: String) = {
   val nexus = "https://oss.sonatype.org/"
   if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
