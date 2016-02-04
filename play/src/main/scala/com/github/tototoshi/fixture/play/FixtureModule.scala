@@ -1,20 +1,24 @@
 package com.github.tototoshi.fixture.play
 
-import java.io.File
-import javax.inject.{Provider, Inject, Singleton}
+import java.io.{ByteArrayOutputStream, File, InputStream}
+import java.util.regex.Pattern
+import javax.inject.{Inject, Provider, Singleton}
 
 import com.github.tototoshi.fixture.Fixture
-import play.api.{Mode, Configuration, Environment}
+import org.webjars.WebJarAssetLocator
 import play.api.inject.{Binding, Module}
-import play.api.mvc.{Result, RequestHeader}
 import play.api.mvc.Results._
-import play.core.{BuildLink, WebCommands, HandleWebCommandSupport}
+import play.api.mvc.{RequestHeader, Result}
+import play.api.{Configuration, Environment, Mode}
+import play.core.{BuildLink, HandleWebCommandSupport, WebCommands}
 
 class FixtureWebCommandHandler(configuration: Configuration, environment: Environment) extends HandleWebCommandSupport {
 
-  val configurationReader = new ConfigurationReader(configuration)
+  private val configurationReader = new ConfigurationReader(configuration)
 
-  object Path {
+  private val webJarAssetLocator = new WebJarAssetLocator(WebJarAssetLocator.getFullPathIndex(Pattern.compile(".*"), environment.classLoader))
+
+  private object Path {
     def unapplySeq(s: String): Option[Seq[String]] =
       if (s.trim.isEmpty) {
         None
@@ -24,6 +28,19 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
   }
 
   def handleWebCommand(request: RequestHeader, buildLink: BuildLink, path: File): Option[Result] = {
+
+    def readInputStreamToString(stream: InputStream): String = {
+      val buffer = new Array[Byte](8192)
+      var len = stream.read(buffer)
+      using(new ByteArrayOutputStream()) { out =>
+        while (len != -1) {
+          out.write(buffer, 0, len)
+          len = stream.read(buffer)
+        }
+        new String(out.toByteArray)
+      }
+    }
+
     if (!isDev(environment)) {
       None
     } else {
@@ -36,8 +53,23 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
         case Path("@fixture", dbName, "tearDown") =>
           createFixture(configuration, dbName).tearDown()
           Some(Redirect(s"/@fixture/${dbName}"))
+        case Path("@fixture", "assets", assets@_*) =>
+          Option(environment.classLoader.getResource(webJarAssetLocator.getFullPath(assets.mkString("/")))).map {
+            resource =>
+              using(resource.openStream()) { stream =>
+                Some(Ok(readInputStreamToString(stream)))
+              }
+          }.getOrElse(Some(NotFound))
         case _ => None
       }
+    }
+  }
+
+  private def using[A <: {def close() : Unit}, B](resource: A)(f: A => B): B = {
+    try {
+      f(resource)
+    } finally {
+      resource.close()
     }
   }
 
@@ -52,7 +84,7 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
           case Some(p) => fixture.scriptPackage(p).scripts(config.scripts)
           case None => fixture.scripts(config.scripts)
         }
-      case None => sys.error(s"Configuration of Database \"${dbName}\" is missing")
+      case None => sys.error( s"""Configuration of Database "${dbName}" is missing""")
     }
   }
 
@@ -61,6 +93,7 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
 }
 
 case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)
+
 case class FixtureConfiguration(database: DatabaseConfiguration, scriptLocation: String, scriptPackage: Option[String], scripts: Seq[String])
 
 class ConfigurationReader(configuration: Configuration) {
@@ -102,12 +135,12 @@ class ConfigurationReader(configuration: Configuration) {
 
 }
 
-class FixtureWebCommand @Inject() (configuration: Configuration, environment: Environment, webCommand: WebCommands) {
+class FixtureWebCommand @Inject()(configuration: Configuration, environment: Environment, webCommand: WebCommands) {
   webCommand.addHandler(new FixtureWebCommandHandler(configuration, environment))
 }
 
 @Singleton
-class FixtureWebCommandProvider @Inject() (configuration: Configuration, environment: Environment, webCommands: WebCommands)
+class FixtureWebCommandProvider @Inject()(configuration: Configuration, environment: Environment, webCommands: WebCommands)
     extends Provider[FixtureWebCommand] {
   override def get(): FixtureWebCommand = new FixtureWebCommand(configuration, environment, webCommands)
 }

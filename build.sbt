@@ -60,7 +60,9 @@ lazy val play = Project(
 ).enablePlugins(SbtTwirl).settings(
   name := "scala-fixture-play",
   libraryDependencies ++= Seq(
-    "com.typesafe.play" %% "play" % "2.4.6" % "provided"
+    "com.typesafe.play" %% "play" % "2.4.6" % "provided",
+    "org.webjars" % "webjars-locator" % "0.28",
+    "org.webjars" % "bootstrap" % "3.1.1-2"
   )
 ).settings(commonSettings ++ publishSettings).dependsOn(core)
 
