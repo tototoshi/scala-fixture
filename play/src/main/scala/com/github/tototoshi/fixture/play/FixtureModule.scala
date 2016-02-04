@@ -18,6 +18,8 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
 
   private val webJarAssetLocator = new WebJarAssetLocator(WebJarAssetLocator.getFullPathIndex(Pattern.compile(".*"), environment.classLoader))
 
+  private val fixtureConfigurations = configurationReader.getFixtureConfigurations
+
   private object Path {
     def unapplySeq(s: String): Option[Seq[String]] =
       if (s.trim.isEmpty) {
@@ -46,7 +48,10 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
     } else {
       request.path match {
         case Path("@fixture") => Some(Ok(views.html.index(configurationReader.getAllDatabaseNames)))
-        case Path("@fixture", dbName) => Some(Ok(views.html.show(dbName)))
+        case Path("@fixture", dbName) =>
+          fixtureConfigurations.get(dbName).map { configuration =>
+            Some(Ok(views.html.show(dbName, configuration.scripts)))
+          }.getOrElse(Some(NotFound))
         case Path("@fixture", dbName, "setUp") =>
           createFixture(configuration, dbName).setUp()
           Some(Redirect(s"/@fixture/${dbName}"))
@@ -74,7 +79,6 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
   }
 
   private def createFixture(configuration: Configuration, dbName: String): Fixture = {
-    val fixtureConfigurations = configurationReader.getFixtureConfigurations
     fixtureConfigurations.get(dbName) match {
       case Some(config) =>
         val dbConfig = config.database

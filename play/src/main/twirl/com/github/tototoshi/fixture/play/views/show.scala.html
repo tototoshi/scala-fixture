@@ -1,8 +1,22 @@
-@(dbName: String)
+@(dbName: String, scripts: Seq[String])
 
 @layout {
+
+    <h1>Database: @dbName</h1>
+
+
+    <a class="btn btn-danger" href="/@@fixture/@dbName/setUp">setUp</a>
+    <a class="btn btn-danger" href="/@@fixture/@dbName/tearDown">tearDown</a>
+
+    <hr>
+
+    <h2>Fixture scripts</h2>
+
     <ul>
-        <li><a href="/@@fixture/@dbName/setUp">setUp</a></li>
-        <li><a href="/@@fixture/@dbName/tearDown">tearDown</a></li>
+    @scripts.map { script =>
+        <li>@script</li>
+    }
     </ul>
+
+
 }
