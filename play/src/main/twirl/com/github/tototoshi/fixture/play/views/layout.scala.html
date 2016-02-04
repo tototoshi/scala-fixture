@@ -4,9 +4,23 @@
     <head>
         <title>scala-fixture</title>
         <link rel="stylesheet" href="/@@fixture/assets/bootstrap.css"/>
+        <style>
+        body { padding-top: 50px; }
+        </style>
     </head>
     <body>
+        <nav class="navbar navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/@@fixture">scala-fixture admin</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
         @content
+        </div>
+
         <script type="text/javascript" src="/@@fixture/assets/jquery.js"></script>
         <script type="text/javascript" src="/@@fixture/assets/bootstrap.js"></script>
     </body>

@@ -1,8 +1,6 @@
 @(databaseNames: Seq[String])
 
 @layout {
-    <h1><a href="/@@fixture">fixture admin</a></h1>
-
     <ul>
     @databaseNames.map { dbName =>
         <li><a href="/@@fixture/@dbName">@dbName</a></li>
