@@ -8,7 +8,8 @@ case class Fixture(
     classLoader: ClassLoader = Thread.currentThread().getContextClassLoader,
     scripts: Seq[String] = Seq(),
     scriptLocation: String = "",
-    scriptPackage: String = "") {
+    scriptPackage: String = ""
+) {
 
   def classLoader(classLoader: ClassLoader): Fixture = this.copy(classLoader = classLoader)
 
@@ -30,29 +31,15 @@ case class Fixture(
 
   def setUp(): Unit = {
     val db = new Database(driver, url, username, password)
-    using(db.getConnection()) { conn =>
+    IOUtil.using(db.getConnection()) { conn =>
       scan.foreach { script => script.setUp(conn) }
     }
   }
 
   def tearDown(): Unit = {
     val db = new Database(driver, url, username, password)
-    using(db.getConnection()) { conn =>
+    IOUtil.using(db.getConnection()) { conn =>
       scan.reverse.foreach { script => script.tearDown(conn) }
-    }
-  }
-
-  private[this] type Closable = { def close() }
-
-  private[this] def using[R <: Closable, A](resource: R)(f: R => A): A = {
-    try {
-      f(resource)
-    } finally {
-      try {
-        resource.close()
-      } catch {
-        case scala.util.control.NonFatal(_) =>
-      }
     }
   }
 
