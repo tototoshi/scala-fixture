@@ -3,10 +3,10 @@ package com.github.tototoshi.fixture.play
 import javax.inject.Inject
 
 import com.github.tototoshi.fixture.Fixture
-import play.api.{ Environment, Configuration }
 import play.api.inject.ApplicationLifecycle
+import play.api.{ Configuration, Environment }
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.ExecutionContext
 
 class Fixtures @Inject() (
     configuration: Configuration,
@@ -32,33 +32,5 @@ class Fixtures @Inject() (
     }
   }
 
-  private def initialize(): Unit = {
-    lifecycle.addStopHook(() => Future {
-      onStop()
-    }(executionContext))
-
-    onStart()
-  }
-
-  private def withAllDatabasesMarkedAuto(f: Fixture => Unit): Unit = {
-    val allFixturesMarkedAuto = for {
-      dbName <- allDatabaseNames
-      conf <- fixtureConfigurations.get(dbName)
-      if conf.auto
-      fixture <- get(dbName)
-    } yield fixture
-
-    allFixturesMarkedAuto.foreach(f)
-  }
-
-  private def onStart(): Unit = {
-    withAllDatabasesMarkedAuto { fixture => fixture.setUp() }
-  }
-
-  private def onStop(): Unit = {
-    withAllDatabasesMarkedAuto { fixture => fixture.tearDown() }
-  }
-
-  initialize()
 }
 
