@@ -77,4 +77,4 @@ lazy val playapp = Project(
     "org.scalikejdbc" %% "scalikejdbc-config"           % "2.3.4",
     "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.3"
   )
-).settings(commonSettings ++ publishSettings).dependsOn(play)
+).settings(commonSettings).dependsOn(play)
