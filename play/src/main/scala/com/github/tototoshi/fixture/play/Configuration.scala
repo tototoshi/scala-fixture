@@ -5,7 +5,13 @@ import scala.collection.JavaConverters._
 
 case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)
 
-case class FixtureConfiguration(database: DatabaseConfiguration, scriptLocation: String, scriptPackage: Option[String], scripts: Seq[String])
+case class FixtureConfiguration(
+  database: DatabaseConfiguration,
+  auto: Boolean,
+  scriptLocation: String,
+  scriptPackage: Option[String],
+  scripts: Seq[String]
+)
 
 class ConfigurationReader(configuration: Configuration) {
 
@@ -26,7 +32,9 @@ class ConfigurationReader(configuration: Configuration) {
     val scriptPackage = configuration.getString(s"db.${databaseName}.fixture.scriptPackage")
     val scripts = getStringSeqConfiguration(configuration, s"db.${databaseName}.fixture.scripts")
 
-    FixtureConfiguration(databaseConfiguration, scriptLocation, scriptPackage, scripts)
+    val auto = configuration.getBoolean(s"db.${databaseName}.fixture.auto").getOrElse(false)
+
+    FixtureConfiguration(databaseConfiguration, auto, scriptLocation, scriptPackage, scripts)
   }
 
   def getAllDatabaseNames: Seq[String] = (for {
