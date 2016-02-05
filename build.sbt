@@ -73,8 +73,10 @@ lazy val playapp = Project(
   libraryDependencies ++= Seq(
     "org.flywaydb" %% "flyway-play" % "2.2.1",
     jdbc,
-    "org.scalikejdbc" %% "scalikejdbc"                  % "2.3.4",
-    "org.scalikejdbc" %% "scalikejdbc-config"           % "2.3.4",
-    "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.3"
+    "org.scalikejdbc" %% "scalikejdbc" % "2.3.4",
+    "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.4",
+    "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.3",
+    "org.webjars" %% "webjars-play" % "2.4.0-1",
+    "org.webjars" % "bootstrap" % "3.1.1-2"
   )
 ).settings(commonSettings).dependsOn(play)
