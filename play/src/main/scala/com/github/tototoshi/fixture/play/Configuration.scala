@@ -30,11 +30,11 @@ class FixtureConfigurationReader @Inject() (configuration: Configuration) {
     val databaseConfiguration = DatabaseConfiguration(driver, url, username, password)
 
     // scala-fixture specific configuration
-    val scriptLocation = configuration.getString(s"db.${databaseName}.fixture.scriptLocation").getOrElse(s"db/fixtures/${databaseName}")
-    val scriptPackage = configuration.getString(s"db.${databaseName}.fixture.scriptPackage")
-    val scripts = getStringSeqConfiguration(configuration, s"db.${databaseName}.fixture.scripts")
+    val scriptLocation = configuration.getString(s"db.${databaseName}.fixtures.scriptLocation").getOrElse(s"db/fixtures/${databaseName}")
+    val scriptPackage = configuration.getString(s"db.${databaseName}.fixtures.scriptPackage")
+    val scripts = getStringSeqConfiguration(configuration, s"db.${databaseName}.fixtures.scripts")
 
-    val auto = configuration.getBoolean(s"db.${databaseName}.fixture.auto").getOrElse(false)
+    val auto = configuration.getBoolean(s"db.${databaseName}.fixtures.auto").getOrElse(false)
 
     FixtureConfiguration(databaseConfiguration, auto, scriptLocation, scriptPackage, scripts)
   }
