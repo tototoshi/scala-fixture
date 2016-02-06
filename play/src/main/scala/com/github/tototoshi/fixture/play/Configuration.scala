@@ -15,7 +15,7 @@ case class FixtureConfiguration(
   scripts: Seq[String]
 )
 
-class FixtureConfigurationReader @Inject() (configuration: Configuration) {
+class FixtureConfigurationReader(configuration: Configuration) {
 
   def getFixtureConfigurations: Map[String, FixtureConfiguration] = {
     getAllDatabaseNames.map { databaseName => (databaseName, getFixtureConfiguration(databaseName)) }.toMap
