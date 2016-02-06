@@ -1,8 +1,7 @@
 package com.github.tototoshi.fixture.play
 
-import javax.inject.Inject
-
 import play.api.Configuration
+
 import scala.collection.JavaConverters._
 
 case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)

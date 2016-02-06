@@ -4,7 +4,7 @@ import javax.inject.{ Inject, Singleton }
 
 import com.github.tototoshi.fixture.Fixture
 import play.api.inject.ApplicationLifecycle
-import play.api.{ Mode, Configuration, Environment }
+import play.api.{ Configuration, Environment, Mode }
 
 import scala.concurrent.{ ExecutionContext, Future }
 

@@ -1,8 +1,8 @@
 package com.github.tototoshi.fixture.play
 
-import java.io.{ ByteArrayOutputStream, InputStream, File }
+import java.io.{ ByteArrayOutputStream, File, InputStream }
 import java.util.regex.Pattern
-import javax.inject.{ Singleton, Inject }
+import javax.inject.{ Inject, Singleton }
 
 import com.github.tototoshi.fixture.IOUtil
 import org.webjars.WebJarAssetLocator
