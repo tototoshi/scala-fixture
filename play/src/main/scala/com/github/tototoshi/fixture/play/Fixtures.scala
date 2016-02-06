@@ -3,17 +3,9 @@ package com.github.tototoshi.fixture.play
 import javax.inject.Inject
 
 import com.github.tototoshi.fixture.Fixture
-import play.api.{ Configuration, Environment }
-import play.api.inject.ApplicationLifecycle
+import play.api.Configuration
 
-import scala.concurrent.ExecutionContext
-
-class Fixtures @Inject() (
-    configuration: Configuration,
-    environment: Environment,
-    lifecycle: ApplicationLifecycle,
-    executionContext: ExecutionContext
-) {
+class Fixtures @Inject() (configuration: Configuration) {
 
   private val configurationReader = new FixtureConfigurationReader(configuration)
 
