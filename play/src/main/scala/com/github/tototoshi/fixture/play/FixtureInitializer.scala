@@ -4,7 +4,7 @@ import javax.inject.{ Inject, Singleton }
 
 import com.github.tototoshi.fixture.Fixture
 import play.api.inject.ApplicationLifecycle
-import play.api.{ Configuration, Environment }
+import play.api.{ Mode, Configuration, Environment }
 
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -48,5 +48,7 @@ class FixtureInitializer @Inject() (
     withAllDatabasesMarkedAuto { fixture => fixture.tearDown() }
   }
 
-  initialize()
+  if (environment.mode == Mode.Dev) {
+    initialize()
+  }
 }
