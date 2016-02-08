@@ -112,6 +112,31 @@ SQL fixture script and Java(Scala)-based Fixture script can be used in mixture. 
 ```
 
 
+# scala-fixture Play Module
+
+## Install
+
+```scala
+libraryDependencies += "com.github.tototoshi" %% "scala-fixture-play" % "0.1.0-SNAPSHOT"
+```
+
+## Cofiguration
+
+```
+play.modules.enabled += "com.github.tototoshi.fixture.play.FixtureModule"
+
+db.default.driver=org.h2.Driver
+db.default.url="jdbc:h2:mem:play"
+db.default.username=sa
+db.default.password=""
+db.default.fixtures.scriptLocation="db/fixtures/default"
+db.default.fixtures.scriptPackage="com.example.fixture"
+db.default.fixtures.scripts=["script1.sql", "script2.sql"]
+
+ // if true, fixtures are automatically loaded on start and cleared on stop
+db.default.fixtures.auto=true
+```
+
 ## LICENSE
 
 Apache 2.0
