@@ -32,7 +32,6 @@ lazy val publishSettings = Seq(
 
 
 lazy val commonSettings = Seq(
-  version := "0.1.2",
   scalaVersion := "2.11.7",
   crossScalaVersions := Seq("2.10.5", "2.11.7"),
   organization := "com.github.tototoshi",
@@ -45,6 +44,7 @@ lazy val core = Project(
   base = file("core")
 ).settings(
   name := "scala-fixture",
+  version := "0.2.0-SNAPSHOT",
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
     "org.scalatest" %% "scalatest" % "2.2.5" % "test",
@@ -57,6 +57,7 @@ lazy val play = Project(
   base = file("play")
 ).enablePlugins(SbtTwirl).settings(
   name := "scala-fixture-play",
+  version := "0.1.0-SNAPSHOT",
   libraryDependencies ++= Seq(
     "com.typesafe.play" %% "play" % "2.4.6" % "provided",
     "org.webjars" % "webjars-locator" % "0.28",
