@@ -70,6 +70,7 @@ lazy val playapp = Project(
   base = file("playapp")
 ).enablePlugins(PlayScala).settings(
   name := "scala-fixture-playapp",
+  version := "0.1.0-SNAPSHOT",
   routesGenerator := InjectedRoutesGenerator,
   publish := {},
   publishLocal := {},
