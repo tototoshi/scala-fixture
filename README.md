@@ -132,9 +132,6 @@ db.default.password=""
 db.default.fixtures.scriptLocation="db/fixtures/default"
 db.default.fixtures.scriptPackage="com.example.fixture"
 db.default.fixtures.scripts=["script1.sql", "script2.sql"]
-
- // if true, fixtures are automatically loaded on start and cleared on stop
-db.default.fixtures.auto=true
 ```
 
 ## LICENSE
