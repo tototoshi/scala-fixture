@@ -138,7 +138,7 @@ db.default.fixtures.scriptPackage="com.example.fixture"
 db.default.fixtures.scripts=["script1.sql", "script2.sql"]
 ```
 
-The admin page can be seen at http://localhost:9000/@flyway .
+The admin page can be seen at http://localhost:9000/@fixture .
 This feature is only for dev mode and disabled in production environment.
 
 ## LICENSE
