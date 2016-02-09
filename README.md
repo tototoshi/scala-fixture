@@ -114,6 +114,10 @@ SQL fixture script and Java(Scala)-based Fixture script can be used in mixture. 
 
 # scala-fixture Play Module
 
+This module provides web-based UI for scala-fixture. 
+
+![screenshot](./screenshot.png)
+
 ## Install
 
 ```scala
@@ -133,6 +137,9 @@ db.default.fixtures.scriptLocation="db/fixtures/default"
 db.default.fixtures.scriptPackage="com.example.fixture"
 db.default.fixtures.scripts=["script1.sql", "script2.sql"]
 ```
+
+The admin page can be seen at http://localhost:9000/@flyway .
+This feature is only for dev mode and disabled in production environment.
 
 ## LICENSE
 
