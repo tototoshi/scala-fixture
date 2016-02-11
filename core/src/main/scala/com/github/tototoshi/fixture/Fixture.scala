@@ -3,8 +3,8 @@ package com.github.tototoshi.fixture
 case class Fixture(
     driver: String,
     url: String,
-    username: String,
-    password: String,
+    username: Option[String],
+    password: Option[String],
     classLoader: ClassLoader = Thread.currentThread().getContextClassLoader,
     scripts: Seq[String] = Seq(),
     scriptLocation: String = "",

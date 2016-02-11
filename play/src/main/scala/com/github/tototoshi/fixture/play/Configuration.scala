@@ -4,7 +4,7 @@ import play.api.Configuration
 
 import scala.collection.JavaConverters._
 
-case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)
+case class DatabaseConfiguration(driver: String, url: String, username: Option[String], password: Option[String])
 
 case class FixtureConfiguration(
   database: DatabaseConfiguration,
@@ -23,8 +23,9 @@ class FixtureConfigurationReader(configuration: Configuration) {
   private def getFixtureConfiguration(databaseName: String): FixtureConfiguration = {
     val driver = getStringConfiguration(configuration, s"db.${databaseName}.driver")
     val url = getStringConfiguration(configuration, s"db.${databaseName}.url")
-    val username = getStringConfiguration(configuration, s"db.${databaseName}.username")
-    val password = getStringConfiguration(configuration, s"db.${databaseName}.password")
+    val username = configuration.getString(s"db.${databaseName}.username")
+      .orElse(configuration.getString(s"db.${databaseName}.user"))
+    val password = configuration.getString(s"db.${databaseName}.password")
 
     val databaseConfiguration = DatabaseConfiguration(driver, url, username, password)
 
