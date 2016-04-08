@@ -127,7 +127,7 @@ libraryDependencies += "com.github.tototoshi" %% "scala-fixture-play" % "0.1.0-S
 ## Cofiguration
 
 ```
-play.modules.enabled += "com.github.tototoshi.fixture.play.FixtureModule"
+play.modules.enabled += "com.github.tototoshi.fixture.play.FixtureAdminModule"
 
 db.default.driver=org.h2.Driver
 db.default.url="jdbc:h2:mem:play"
