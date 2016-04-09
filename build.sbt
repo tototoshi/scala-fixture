@@ -32,8 +32,7 @@ lazy val publishSettings = Seq(
 
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.11.7",
-  crossScalaVersions := Seq("2.10.5", "2.11.7"),
+  scalaVersion := "2.11.8",
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
   parallelExecution in Test := false
@@ -48,7 +47,7 @@ lazy val core = Project(
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
     "org.scalatest" %% "scalatest" % "2.2.5" % "test",
-    "org.flywaydb" % "flyway-core" % "3.2.1" % "test"
+    "org.flywaydb" % "flyway-core" % "4.0" % "test"
   )
 ).settings(commonSettings ++ publishSettings)
 
@@ -59,9 +58,9 @@ lazy val play = Project(
   name := "scala-fixture-play",
   version := "0.1.0-SNAPSHOT",
   libraryDependencies ++= Seq(
-    "com.typesafe.play" %% "play" % "2.4.6" % "provided",
-    "org.webjars" % "webjars-locator" % "0.28",
-    "org.webjars" % "bootstrap" % "3.1.1-2"
+    "com.typesafe.play" %% "play" % "2.5.0" % "provided",
+    "org.webjars" % "webjars-locator" % "0.30",
+    "org.webjars" % "bootstrap" % "3.3.6"
   )
 ).settings(commonSettings ++ publishSettings).dependsOn(core)
 
@@ -75,12 +74,12 @@ lazy val playapp = Project(
   publish := {},
   publishLocal := {},
   libraryDependencies ++= Seq(
-    "org.flywaydb" %% "flyway-play" % "2.2.1",
+    "org.flywaydb" %% "flyway-play" % "3.0.0",
     jdbc,
     "org.scalikejdbc" %% "scalikejdbc" % "2.3.4",
     "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.4",
     "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.3",
-    "org.webjars" %% "webjars-play" % "2.4.0-1",
-    "org.webjars" % "bootstrap" % "3.1.1-2"
+    "org.webjars" %% "webjars-play" % "2.5.0",
+    "org.webjars" % "bootstrap" % "3.3.6"
   )
 ).settings(commonSettings).dependsOn(play)
