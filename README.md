@@ -121,7 +121,7 @@ This module provides web-based UI for scala-fixture.
 ## Install
 
 ```scala
-libraryDependencies += "com.github.tototoshi" %% "scala-fixture-play" % "0.1.0-SNAPSHOT"
+libraryDependencies += "com.github.tototoshi" %% "scala-fixture-play" % "0.2.0-SNAPSHOT"
 ```
 
 ## Cofiguration

@@ -56,7 +56,7 @@ lazy val play = Project(
   base = file("play")
 ).enablePlugins(SbtTwirl).settings(
   name := "scala-fixture-play",
-  version := "0.1.0-SNAPSHOT",
+  version := "0.2.0-SNAPSHOT",
   libraryDependencies ++= Seq(
     "com.typesafe.play" %% "play" % "2.5.0" % "provided",
     "org.webjars" % "webjars-locator" % "0.30",
@@ -69,7 +69,7 @@ lazy val playapp = Project(
   base = file("playapp")
 ).enablePlugins(PlayScala).settings(
   name := "scala-fixture-playapp",
-  version := "0.1.0-SNAPSHOT",
+  version := "0.2.0-SNAPSHOT",
   routesGenerator := InjectedRoutesGenerator,
   publish := {},
   publishLocal := {},
