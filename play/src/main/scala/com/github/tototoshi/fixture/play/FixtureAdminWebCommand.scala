@@ -70,7 +70,7 @@ class FixtureWebCommandHandler(environment: Environment, fixtures: Fixtures) ext
 }
 
 @Singleton
-class FixtureWebCommand @Inject() (environment: Environment, webCommand: WebCommands, fixtures: Fixtures) {
+class FixtureAdminWebCommand @Inject() (environment: Environment, webCommand: WebCommands, fixtures: Fixtures) {
   webCommand.addHandler(new FixtureWebCommandHandler(environment, fixtures))
 }
 

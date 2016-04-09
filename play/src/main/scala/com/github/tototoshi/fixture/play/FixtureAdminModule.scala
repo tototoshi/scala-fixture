@@ -6,7 +6,7 @@ import play.api.{ Configuration, Environment }
 class FixtureAdminModule extends Module {
   override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = {
     Seq(
-      bind[FixtureWebCommand].toSelf.eagerly
+      bind[FixtureAdminWebCommand].toSelf.eagerly
     )
   }
 }
