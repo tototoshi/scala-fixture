@@ -8,10 +8,10 @@ import com.github.tototoshi.fixture.IOUtil
 import org.webjars.WebJarAssetLocator
 import play.api.mvc.Results._
 import play.api.mvc.{ RequestHeader, Result }
-import play.api.{ Configuration, Environment, Mode }
+import play.api.{ Environment, Mode }
 import play.core.{ BuildLink, HandleWebCommandSupport, WebCommands }
 
-class FixtureWebCommandHandler(configuration: Configuration, environment: Environment, fixtures: Fixtures) extends HandleWebCommandSupport {
+class FixtureWebCommandHandler(environment: Environment, fixtures: Fixtures) extends HandleWebCommandSupport {
 
   private val webJarAssetLocator = new WebJarAssetLocator(WebJarAssetLocator.getFullPathIndex(Pattern.compile(".*"), environment.classLoader))
 
@@ -70,7 +70,7 @@ class FixtureWebCommandHandler(configuration: Configuration, environment: Enviro
 }
 
 @Singleton
-class FixtureWebCommand @Inject() (configuration: Configuration, environment: Environment, webCommand: WebCommands, fixtures: Fixtures) {
-  webCommand.addHandler(new FixtureWebCommandHandler(configuration, environment, fixtures))
+class FixtureWebCommand @Inject() (environment: Environment, webCommand: WebCommands, fixtures: Fixtures) {
+  webCommand.addHandler(new FixtureWebCommandHandler(environment, fixtures))
 }
 

@@ -3,15 +3,12 @@ package com.github.tototoshi.fixture.play
 import javax.inject.Inject
 
 import com.github.tototoshi.fixture.Fixture
-import play.api.Configuration
 
-class Fixtures @Inject() (configuration: Configuration) {
+class Fixtures @Inject() (fixtureConfigurationReader: FixtureConfigurationReader) {
 
-  private val configurationReader = new FixtureConfigurationReader(configuration)
+  private val fixtureConfigurations = fixtureConfigurationReader.getFixtureConfigurations
 
-  private val fixtureConfigurations = configurationReader.getFixtureConfigurations
-
-  def allDatabaseNames: Seq[String] = configurationReader.getAllDatabaseNames
+  def allDatabaseNames: Seq[String] = fixtureConfigurationReader.getAllDatabaseNames
 
   def get(dbName: String): Option[Fixture] = {
     fixtureConfigurations.get(dbName) map { config =>

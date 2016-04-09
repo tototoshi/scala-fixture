@@ -1,5 +1,7 @@
 package com.github.tototoshi.fixture.play
 
+import javax.inject.Inject
+
 import play.api.Configuration
 
 import scala.collection.JavaConverters._
@@ -14,7 +16,7 @@ case class FixtureConfiguration(
   scripts: Seq[String]
 )
 
-class FixtureConfigurationReader(configuration: Configuration) {
+class FixtureConfigurationReader @Inject() (configuration: Configuration) {
 
   def getFixtureConfigurations: Map[String, FixtureConfiguration] = {
     getAllDatabaseNames.map { databaseName => (databaseName, getFixtureConfiguration(databaseName)) }.toMap
