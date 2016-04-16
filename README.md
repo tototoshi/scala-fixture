@@ -22,8 +22,8 @@ class FixtureTest extends FunSuite with BeforeAndAfter {
 
   val driver = "org.h2.Driver"
   val url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
-  val username = Some("sa")
-  val password = None
+  val username = "sa"
+  val password = ""
 
   val fixture = Fixture(driver, url, username, password)
     .scriptLocation("db/fixtures/default")
