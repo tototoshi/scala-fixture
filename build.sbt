@@ -78,7 +78,6 @@ lazy val playapp = Project(
     jdbc,
     "org.scalikejdbc" %% "scalikejdbc" % "2.3.4",
     "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.4",
-    "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.3",
     "org.webjars" %% "webjars-play" % "2.5.0",
     "org.webjars" % "bootstrap" % "3.3.6"
   )

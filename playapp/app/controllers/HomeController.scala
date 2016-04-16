@@ -2,13 +2,13 @@ package controllers
 
 import javax.inject.Inject
 
-import models.User
+import models.UserRepository
 import play.api.mvc.{ Action, Controller }
 
-class HomeController @Inject() (webJarAssets: WebJarAssets) extends Controller {
+class HomeController @Inject() (webJarAssets: WebJarAssets, userRepository: UserRepository) extends Controller {
 
   def index = Action { implicit request =>
-    val users = User.findAll()
+    val users = userRepository.findAll()
     Ok(views.html.index(webJarAssets, users))
   }
 }
