@@ -25,8 +25,8 @@ class FixtureConfigurationReader @Inject() (configuration: Configuration) {
   private def getFixtureConfiguration(databaseName: String): FixtureConfiguration = {
     val driver = getStringConfiguration(configuration, s"db.${databaseName}.driver")
     val url = getStringConfiguration(configuration, s"db.${databaseName}.url")
-    val username = getStringConfiguration(configuration, s"db.${databaseName}.username")
-    val password = getStringConfiguration(configuration, s"db.${databaseName}.password")
+    val username = configuration.getString(s"db.${databaseName}.username").orNull
+    val password = configuration.getString(s"db.${databaseName}.password").orNull
 
     val databaseConfiguration = DatabaseConfiguration(driver, url, username, password)
 
