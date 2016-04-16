@@ -79,6 +79,7 @@ lazy val playapp = Project(
     "org.scalikejdbc" %% "scalikejdbc" % "2.3.4",
     "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.4",
     "org.webjars" %% "webjars-play" % "2.5.0",
-    "org.webjars" % "bootstrap" % "3.3.6"
+    "org.webjars" % "bootstrap" % "3.3.6",
+    "org.scalatest" %% "scalatest" % "2.2.5" % "test"
   )
 ).settings(commonSettings).dependsOn(play)
