@@ -2,7 +2,7 @@ package models
 
 import com.github.tototoshi.fixture.Fixture
 import org.flywaydb.core.Flyway
-import org.scalatest.{BeforeAndAfterAll, FunSuite}
+import org.scalatest.{ BeforeAndAfterAll, FunSuite }
 import scalikejdbc.Commons2ConnectionPoolFactory
 import scalikejdbc.config.TypesafeConfigReader
 
