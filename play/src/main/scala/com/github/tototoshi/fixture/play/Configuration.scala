@@ -51,7 +51,7 @@ class FixtureConfigurationReader @Inject() (configuration: Configuration) {
     configuration.getString(key).getOrElse(sys.error(s"Configuration of ${key} is missing"))
 
   private def getStringSeqConfiguration(configuration: Configuration, key: String): Seq[String] = {
-    configuration.getStringList(key).getOrElse(sys.error(s"Configuration of ${key} is missing")).asScala
+    configuration.getStringList(key).getOrElse(java.util.Collections.emptyList[String]()).asScala
   }
 
 }
