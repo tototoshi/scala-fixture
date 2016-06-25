@@ -58,7 +58,7 @@ lazy val play = Project(
   name := "scala-fixture-play",
   version := "0.2.0-SNAPSHOT",
   libraryDependencies ++= Seq(
-    "com.typesafe.play" %% "play" % "2.5.0" % "provided",
+    "com.typesafe.play" %% "play" % "2.5.4" % "provided",
     "org.webjars" % "webjars-locator" % "0.30",
     "org.webjars" % "bootstrap" % "3.3.6"
   )
