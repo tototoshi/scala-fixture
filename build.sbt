@@ -32,6 +32,7 @@ lazy val publishSettings = Seq(
 
 
 lazy val commonSettings = Seq(
+  version := "0.2.0-SNAPSHOT",
   scalaVersion := "2.11.8",
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
@@ -43,7 +44,6 @@ lazy val core = Project(
   base = file("core")
 ).settings(
   name := "scala-fixture",
-  version := "0.2.0-SNAPSHOT",
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
     "org.scalatest" %% "scalatest" % "2.2.5" % "test",
@@ -56,7 +56,6 @@ lazy val play = Project(
   base = file("play")
 ).enablePlugins(SbtTwirl).settings(
   name := "scala-fixture-play",
-  version := "0.2.0-SNAPSHOT",
   libraryDependencies ++= Seq(
     "com.typesafe.play" %% "play" % "2.5.4" % "provided",
     "org.webjars" % "webjars-locator" % "0.30",
@@ -69,7 +68,6 @@ lazy val playapp = Project(
   base = file("playapp")
 ).enablePlugins(PlayScala).settings(
   name := "scala-fixture-playapp",
-  version := "0.2.0-SNAPSHOT",
   routesGenerator := InjectedRoutesGenerator,
   publish := {},
   publishLocal := {},
