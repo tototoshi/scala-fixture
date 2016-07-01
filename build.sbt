@@ -90,4 +90,7 @@ lazy val playapp = Project(
 lazy val root = Project(
   id = "scala-fixture",
   base = file(".")
-).settings(nonPublishSettings).aggregate(core, play)
+).settings(
+  name := "root"
+).settings(commonSettings ++ nonPublishSettings)
+ .aggregate(core, play)
