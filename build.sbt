@@ -4,6 +4,12 @@ def _publishTo(v: String) = {
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
+lazy val nonPublishSettings = Seq(
+  publishArtifact := false,
+  publish := {},
+  publishLocal := {}
+)
+
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
   publishTo <<= version { (v: String) => _publishTo(v) },
@@ -70,8 +76,6 @@ lazy val playapp = Project(
 ).enablePlugins(PlayScala).settings(
   name := "scala-fixture-playapp",
   routesGenerator := InjectedRoutesGenerator,
-  publish := {},
-  publishLocal := {},
   libraryDependencies ++= Seq(
     "org.flywaydb" %% "flyway-play" % "3.0.0",
     jdbc,
@@ -81,4 +85,4 @@ lazy val playapp = Project(
     "org.webjars" % "bootstrap" % "3.3.6",
     "org.scalatest" %% "scalatest" % "2.2.5" % "test"
   )
-).settings(commonSettings).dependsOn(play)
+).settings(commonSettings ++ nonPublishSettings).dependsOn(play)
