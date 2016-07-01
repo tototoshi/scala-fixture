@@ -86,3 +86,8 @@ lazy val playapp = Project(
     "org.scalatest" %% "scalatest" % "2.2.5" % "test"
   )
 ).settings(commonSettings ++ nonPublishSettings).dependsOn(play)
+
+lazy val root = Project(
+  id = "scala-fixture",
+  base = file(".")
+).settings(nonPublishSettings).aggregate(core, play)
