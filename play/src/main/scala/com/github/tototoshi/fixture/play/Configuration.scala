@@ -13,8 +13,7 @@ case class FixtureConfiguration(
   auto: Boolean,
   scriptLocation: String,
   scriptPackage: Option[String],
-  scripts: Seq[String]
-)
+  scripts: Seq[String])
 
 class FixtureConfigurationReader @Inject() (configuration: Configuration) {
 

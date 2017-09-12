@@ -21,8 +21,7 @@ class ConnectionPoolProvider extends Provider[ConnectionPool] {
 @Singleton
 class ConnectionPoolShutdown @Inject() (
   lifecycle: ApplicationLifecycle,
-    connectionPool: ConnectionPool, executionContext: ExecutionContext
-) {
+  connectionPool: ConnectionPool, executionContext: ExecutionContext) {
   private val logger = Logger(classOf[ConnectionPoolShutdown])
   lifecycle.addStopHook(() => Future {
     logger.info("Shutdown connection pool")

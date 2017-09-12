@@ -1,15 +1,14 @@
 package com.github.tototoshi.fixture
 
 case class Fixture(
-    driver: String,
-    url: String,
-    username: String,
-    password: String,
-    classLoader: ClassLoader = Thread.currentThread().getContextClassLoader,
-    scripts: Seq[String] = Seq(),
-    scriptLocation: String = "",
-    scriptPackage: String = ""
-) {
+  driver: String,
+  url: String,
+  username: String,
+  password: String,
+  classLoader: ClassLoader = Thread.currentThread().getContextClassLoader,
+  scripts: Seq[String] = Seq(),
+  scriptLocation: String = "",
+  scriptPackage: String = "") {
 
   def classLoader(classLoader: ClassLoader): Fixture = this.copy(classLoader = classLoader)
 
