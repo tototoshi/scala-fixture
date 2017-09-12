@@ -24,33 +24,33 @@ class FixtureConfigurationReader @Inject() (configuration: Configuration) {
   private def getFixtureConfiguration(databaseName: String): FixtureConfiguration = {
     val driver = getStringConfiguration(configuration, s"db.${databaseName}.driver")
     val url = getStringConfiguration(configuration, s"db.${databaseName}.url")
-    val username = configuration.getString(s"db.${databaseName}.username").orNull
-    val password = configuration.getString(s"db.${databaseName}.password").orNull
+    val username = configuration.getOptional[String](s"db.${databaseName}.username").orNull
+    val password = configuration.getOptional[String](s"db.${databaseName}.password").orNull
 
     val databaseConfiguration = DatabaseConfiguration(driver, url, username, password)
 
     // scala-fixture specific configuration
-    val scriptLocation = configuration.getString(s"db.${databaseName}.fixtures.scriptLocation").getOrElse(s"db/fixtures/${databaseName}")
-    val scriptPackage = configuration.getString(s"db.${databaseName}.fixtures.scriptPackage")
+    val scriptLocation = configuration.getOptional[String](s"db.${databaseName}.fixtures.scriptLocation").getOrElse(s"db/fixtures/${databaseName}")
+    val scriptPackage = configuration.getOptional[String](s"db.${databaseName}.fixtures.scriptPackage")
     val scripts = getStringSeqConfiguration(configuration, s"db.${databaseName}.fixtures.scripts")
 
-    val auto = configuration.getBoolean(s"db.${databaseName}.fixtures.auto").getOrElse(false)
+    val auto = configuration.getOptional[Boolean](s"db.${databaseName}.fixtures.auto").getOrElse(false)
 
     FixtureConfiguration(databaseConfiguration, auto, scriptLocation, scriptPackage, scripts)
   }
 
   def getAllDatabaseNames: Seq[String] = (for {
-    config <- configuration.getConfig("db").toList
+    config <- configuration.getOptional[Configuration]("db").toList
     dbName <- config.subKeys
   } yield {
     dbName
   }).distinct
 
   private def getStringConfiguration(configuration: Configuration, key: String): String =
-    configuration.getString(key).getOrElse(sys.error(s"Configuration of ${key} is missing"))
+    configuration.getOptional[String](key).getOrElse(sys.error(s"Configuration of ${key} is missing"))
 
   private def getStringSeqConfiguration(configuration: Configuration, key: String): Seq[String] = {
-    configuration.getStringList(key).getOrElse(java.util.Collections.emptyList[String]()).asScala
+    configuration.getOptional[Seq[String]](key).getOrElse(Seq.empty)
   }
 
 }

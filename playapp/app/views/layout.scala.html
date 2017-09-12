@@ -1,12 +1,10 @@
-@(webJarAssets: WebJarAssets)(content: Html)
+@(webJarsUtil: org.webjars.play.WebJarsUtil)(content: Html)
 
 <html>
     <head>
         <title>scala-fixture sample app</title>
-        <link rel='stylesheet' href='@routes.WebJarAssets.at(webJarAssets.locate("css/bootstrap.min.css"))'>
-        <style>
-        body { padding-top: 50px; }
-        </style>
+        @Html(webJarsUtil.css("bootstrap.min.css"))
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/app.css")">
     </head>
     <body>
         <nav class="navbar navbar-fixed-top">
@@ -22,11 +20,11 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div id="content" class="container">
         @content
         </div>
 
-        <script type='text/javascript' src='@routes.WebJarAssets.at(webJarAssets.locate("jquery.min.js"))'></script>
-        <script type='text/javascript' src='@routes.WebJarAssets.at(webJarAssets.locate("bootstrap.min.js"))'></script>
+        @Html(webJarsUtil.script("jquery.min.js"))
+        @Html(webJarsUtil.script("bootstrap.min.js"))
     </body>
 </html>

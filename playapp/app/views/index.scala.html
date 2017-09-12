@@ -1,6 +1,7 @@
-@(webJarAssets: WebJarAssets, users: List[User])
+@this(webJarsUtil: org.webjars.play.WebJarsUtil)
+@(users: List[User])
 
-@layout(webJarAssets) {
+@layout(webJarsUtil){
 
     <h1>Users</h1>
 

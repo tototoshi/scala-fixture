@@ -38,9 +38,9 @@ lazy val publishSettings = Seq(
 
 
 lazy val commonSettings = Seq(
-  version := "0.2.0",
-  scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.11.8"),
+  version := "0.3.0",
+  scalaVersion := "2.12.3",
+  crossScalaVersions := Seq("2.12.3", "2.11.11"),
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
   parallelExecution in Test := false
@@ -53,8 +53,8 @@ lazy val core = Project(
   name := "scala-fixture",
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
-    "org.scalatest" %% "scalatest" % "2.2.5" % "test",
-    "org.flywaydb" % "flyway-core" % "4.0" % "test"
+    "org.scalatest" %% "scalatest" % "3.0.3" % "test",
+    "org.flywaydb" % "flyway-core" % "4.2.0" % "test"
   )
 ).settings(commonSettings ++ publishSettings)
 
@@ -64,9 +64,9 @@ lazy val play = Project(
 ).enablePlugins(SbtTwirl).settings(
   name := "scala-fixture-play",
   libraryDependencies ++= Seq(
-    "com.typesafe.play" %% "play" % "2.5.4" % "provided",
-    "org.webjars" % "webjars-locator" % "0.30",
-    "org.webjars" % "bootstrap" % "3.3.6"
+    "com.typesafe.play" %% "play" % "2.6.3" % "provided",
+    "org.webjars" % "webjars-locator" % "0.32-1",
+    "org.webjars" % "bootstrap" % "3.3.7-1"
   )
 ).settings(commonSettings ++ publishSettings).dependsOn(core)
 
@@ -77,13 +77,15 @@ lazy val playapp = Project(
   name := "scala-fixture-playapp",
   routesGenerator := InjectedRoutesGenerator,
   libraryDependencies ++= Seq(
-    "org.flywaydb" %% "flyway-play" % "3.0.0",
+    guice,
+    "org.flywaydb" %% "flyway-play" % "4.0.0",
     jdbc,
-    "org.scalikejdbc" %% "scalikejdbc" % "2.3.5",
-    "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.5",
-    "org.webjars" %% "webjars-play" % "2.5.0",
-    "org.webjars" % "bootstrap" % "3.3.6",
-    "org.scalatest" %% "scalatest" % "2.2.5" % "test"
+    "org.scalikejdbc" %% "scalikejdbc" % "3.0.2",
+    "org.scalikejdbc" %% "scalikejdbc-config" % "3.0.2",
+    "org.webjars" %% "webjars-play" % "2.6.1",
+    "org.webjars" % "bootstrap" % "3.3.7-1",
+    "com.h2database" % "h2" % "1.4.+",
+    "org.scalatest" %% "scalatest" % "3.0.3" % "test"
   )
 ).settings(commonSettings ++ nonPublishSettings).dependsOn(play)
 
