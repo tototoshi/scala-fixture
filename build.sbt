@@ -15,11 +15,11 @@ lazy val publishSettings = Seq(
   publishTo <<= version { (v: String) => _publishTo(v) },
   publishArtifact in Test := false,
   pomExtra :=
-    <url>http://github.com/tototoshi/scala-fixture</url>
+    <url>https://github.com/tototoshi/scala-fixture</url>
     <licenses>
       <license>
         <name>Apache License, Version 2.0</name>
-        <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+        <url>https://www.apache.org/licenses/LICENSE-2.0.html</url>
         <distribution>repo</distribution>
       </license>
     </licenses>
@@ -31,7 +31,7 @@ lazy val publishSettings = Seq(
       <developer>
         <id>tototoshi</id>
         <name>Toshiyuki Takahashi</name>
-        <url>http://tototoshi.github.io</url>
+        <url>https://tototoshi.github.io</url>
       </developer>
     </developers>
 )
