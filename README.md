@@ -6,7 +6,7 @@ simple fixture for scala
 ## Install
 
 ```scala
-libraryDependencies += "com.github.tototoshi" %% "scala-fixture" % "0.2.0"
+libraryDependencies += "com.github.tototoshi" %% "scala-fixture" % "0.3.0"
 ```
 
 
@@ -120,8 +120,13 @@ This module provides web-based UI for scala-fixture.
 
 ## Install
 
+|Play version|scala-fixture-play version|
+|-----------:|-------------------------:|
+|       2.6.x|                     0.3.0|
+|       2.5.x|                     0.2.0|
+
 ```scala
-libraryDependencies += "com.github.tototoshi" %% "scala-fixture-play" % "0.2.0"
+libraryDependencies += "com.github.tototoshi" %% "scala-fixture-play" % "0.3.0"
 ```
 
 ## Cofiguration
