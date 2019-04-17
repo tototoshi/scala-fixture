@@ -1,9 +1,3 @@
-def _publishTo(v: String) = {
-  val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
-
 lazy val nonPublishSettings = Seq(
   publishArtifact := false,
   publish := {},
@@ -12,7 +6,6 @@ lazy val nonPublishSettings = Seq(
 
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
-  publishTo <<= version { (v: String) => _publishTo(v) },
   publishArtifact in Test := false,
   pomExtra :=
     <url>https://github.com/tototoshi/scala-fixture</url>
@@ -43,7 +36,12 @@ lazy val commonSettings = Seq(
   crossScalaVersions := Seq("2.12.3", "2.11.11"),
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
-  parallelExecution in Test := false
+  parallelExecution in Test := false,
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (version.value.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
+    else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  }
 )
 
 lazy val core = Project(
