@@ -11,7 +11,7 @@ private[fixture] case class SQLFixtureScript(override val name: String, content:
 
   def setUpScript: String =
     content
-      .lines
+      .linesIterator
       .dropWhile { line => !isSetUpMarker(line) }
       .dropWhile { line => isSetUpMarker(line) }
       .takeWhile { line => !isTearDownMarker(line) }
@@ -19,7 +19,7 @@ private[fixture] case class SQLFixtureScript(override val name: String, content:
 
   def tearDownScript: String =
     content
-      .lines
+      .linesIterator
       .dropWhile { line => !isTearDownMarker(line) }
       .dropWhile { line => isTearDownMarker(line) }
       .mkString("\n")
