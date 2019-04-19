@@ -1,5 +1,7 @@
 # scala-fixture
 
+[![Build Status](https://travis-ci.org/tototoshi/scala-fixture.svg?branch=master)](https://travis-ci.org/tototoshi/scala-fixture)
+
 simple fixture for scala
 
 
