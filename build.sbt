@@ -31,7 +31,7 @@ lazy val publishSettings = Seq(
 
 
 lazy val commonSettings = Seq(
-  version := "0.3.1-SNAPSHOT",
+  version := "0.3.1",
   scalaVersion := "2.12.8",
   crossScalaVersions := Seq("2.12.8", "2.11.12"),
   organization := "com.github.tototoshi",
