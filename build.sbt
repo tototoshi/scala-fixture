@@ -62,9 +62,7 @@ lazy val play = Project(
 ).enablePlugins(SbtTwirl).settings(
   name := "scala-fixture-play",
   libraryDependencies ++= Seq(
-    "com.typesafe.play" %% "play" % "2.7.1" % "provided",
-    "org.webjars" % "webjars-locator" % "0.32-1",
-    "org.webjars" % "bootstrap" % "3.3.7-1"
+    "com.typesafe.play" %% "play" % "2.7.1" % "provided"
   )
 ).settings(commonSettings ++ publishSettings).dependsOn(core)
 
@@ -80,8 +78,6 @@ lazy val playapp = Project(
     jdbc,
     "org.scalikejdbc" %% "scalikejdbc" % "3.0.2",
     "org.scalikejdbc" %% "scalikejdbc-config" % "3.0.2",
-    "org.webjars" %% "webjars-play" % "2.6.1",
-    "org.webjars" % "bootstrap" % "3.3.7-1",
     "com.h2database" % "h2" % "1.4.+",
     "org.scalatest" %% "scalatest" % "3.0.3" % "test"
   )
