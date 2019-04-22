@@ -51,7 +51,7 @@ lazy val core = Project(
   name := "scala-fixture",
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
-    "org.scalatest" %% "scalatest" % "3.0.3" % "test",
+    "org.scalatest" %% "scalatest" % "3.0.7" % "test",
     "org.flywaydb" % "flyway-core" % "4.2.0" % "test"
   )
 ).settings(commonSettings ++ publishSettings)
@@ -79,7 +79,7 @@ lazy val playapp = Project(
     "org.scalikejdbc" %% "scalikejdbc" % "3.0.2",
     "org.scalikejdbc" %% "scalikejdbc-config" % "3.0.2",
     "com.h2database" % "h2" % "1.4.+",
-    "org.scalatest" %% "scalatest" % "3.0.3" % "test"
+    "org.scalatest" %% "scalatest" % "3.0.7" % "test"
   )
 ).settings(commonSettings ++ nonPublishSettings).dependsOn(play)
 
