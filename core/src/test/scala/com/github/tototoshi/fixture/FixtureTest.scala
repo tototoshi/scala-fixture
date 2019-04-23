@@ -1,6 +1,7 @@
 package com.github.tototoshi.fixture
 
 import org.flywaydb.core.Flyway
+import org.flywaydb.core.api.configuration.FlywayConfiguration
 import org.scalatest.{ BeforeAndAfter, FunSuite }
 
 class FixtureTest extends FunSuite with BeforeAndAfter {
@@ -10,9 +11,11 @@ class FixtureTest extends FunSuite with BeforeAndAfter {
   val username = "sa"
   val password = ""
 
-  val flyway = new Flyway
-  flyway.setDataSource(url, username, password)
-  flyway.setLocations("db/migration/default")
+  val flyway = Flyway
+    .configure()
+    .dataSource(url, username, password)
+    .locations("db/migration/default")
+    .load()
 
   val fixture = Fixture(driver, url, username, password)
     .scriptLocation("db/fixtures/default")
