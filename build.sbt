@@ -76,8 +76,8 @@ lazy val playapp = Project(
     guice,
     "org.flywaydb" %% "flyway-play" % "5.3.2",
     jdbc,
-    "org.scalikejdbc" %% "scalikejdbc" % "3.0.2",
-    "org.scalikejdbc" %% "scalikejdbc-config" % "3.0.2",
+    "org.scalikejdbc" %% "scalikejdbc" % "3.3.4",
+    "org.scalikejdbc" %% "scalikejdbc-config" % "3.3.4",
     "com.h2database" % "h2" % "1.4.+",
     "org.scalatest" %% "scalatest" % "3.0.7" % "test"
   )
