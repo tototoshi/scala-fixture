@@ -1,6 +1,6 @@
 # scala-fixture
 
-[![Build Status](https://travis-ci.org/tototoshi/scala-fixture.svg?branch=master)](https://travis-ci.org/tototoshi/scala-fixture)
+[![Scala CI](https://github.com/tototoshi/scala-fixture/actions/workflows/scala.yml/badge.svg)](https://github.com/tototoshi/scala-fixture/actions/workflows/scala.yml)
 
 simple fixture for scala
 
