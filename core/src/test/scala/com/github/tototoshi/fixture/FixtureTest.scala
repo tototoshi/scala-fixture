@@ -1,7 +1,7 @@
 package com.github.tototoshi.fixture
 
 import org.flywaydb.core.Flyway
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{ BeforeAndAfter, FunSuite }
 
 class FixtureTest extends FunSuite with BeforeAndAfter {
 
