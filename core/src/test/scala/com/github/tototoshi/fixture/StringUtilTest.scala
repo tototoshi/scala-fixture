@@ -1,8 +1,8 @@
 package com.github.tototoshi.fixture
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class StringUtilTest extends FunSuite {
+class StringUtilTest extends AnyFunSuite {
 
   test("#trimLeadingSlashes") {
     assert(StringUtil.trimLeadingSlashes("/hoge") === "hoge")

@@ -2,9 +2,9 @@ package com.github.tototoshi.fixture
 
 import java.nio.file.{ Files, Paths }
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class SQLFixtureScriptTest extends FunSuite {
+class SQLFixtureScriptTest extends AnyFunSuite {
 
   test("Parse script file") {
     val path = Paths.get(getClass.getClassLoader.getResource("db/fixtures/default/script1.sql").toURI)
