@@ -1,9 +1,10 @@
 package com.github.tototoshi.fixture
 
 import org.flywaydb.core.Flyway
-import org.scalatest.{ BeforeAndAfter, FunSuite }
+import org.scalatest.BeforeAndAfter
+import org.scalatest.funsuite.AnyFunSuite
 
-class FixtureTest extends FunSuite with BeforeAndAfter {
+class FixtureTest extends AnyFunSuite with BeforeAndAfter {
 
   val driver = "org.h2.Driver"
   val url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
