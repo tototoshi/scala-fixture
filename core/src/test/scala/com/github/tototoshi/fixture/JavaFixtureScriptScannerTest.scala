@@ -1,8 +1,8 @@
 package com.github.tototoshi.fixture
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class JavaFixtureScriptScannerTest extends FunSuite {
+class JavaFixtureScriptScannerTest extends AnyFunSuite {
 
   test("search java-based fixture script") {
     val scanner = new JavaFixtureScriptScanner(getClass.getClassLoader, "")
