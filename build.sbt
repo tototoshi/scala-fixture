@@ -31,9 +31,9 @@ lazy val publishSettings = Seq(
 
 
 lazy val commonSettings = Seq(
-  version := "0.4.0",
-  scalaVersion := "2.12.8",
-  crossScalaVersions := Seq("2.12.8", "2.11.12"),
+  version := "0.5.0-SNAPSHOT",
+  scalaVersion := "2.13.5",
+  crossScalaVersions := Seq("2.13.5", "2.12.13", "2.11.12"),
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
   parallelExecution in Test := false,
@@ -51,8 +51,8 @@ lazy val core = Project(
   name := "scala-fixture",
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
-    "org.scalatest" %% "scalatest" % "3.0.7" % "test",
-    "org.flywaydb" % "flyway-core" % "5.2.4" % "test"
+    "org.scalatest" %% "scalatest" % "3.2.5" % "test",
+    "org.flywaydb" % "flyway-core" % "7.5.4" % "test"
   )
 ).settings(commonSettings ++ publishSettings)
 
@@ -62,7 +62,7 @@ lazy val play = Project(
 ).enablePlugins(SbtTwirl).settings(
   name := "scala-fixture-play",
   libraryDependencies ++= Seq(
-    "com.typesafe.play" %% "play" % "2.7.1" % "provided"
+    "com.typesafe.play" %% "play" % "2.7.9" % "provided"
   )
 ).settings(commonSettings ++ publishSettings).dependsOn(core)
 
@@ -79,7 +79,7 @@ lazy val playapp = Project(
     "org.scalikejdbc" %% "scalikejdbc" % "3.3.4",
     "org.scalikejdbc" %% "scalikejdbc-config" % "3.3.4",
     "com.h2database" % "h2" % "1.4.+",
-    "org.scalatest" %% "scalatest" % "3.0.7" % "test"
+    "org.scalatest" %% "scalatest" % "3.2.5" % "test"
   )
 ).settings(commonSettings ++ nonPublishSettings).dependsOn(play)
 
