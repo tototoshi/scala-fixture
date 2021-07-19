@@ -52,7 +52,7 @@ lazy val core = Project(
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "1.4.+" % "test",
     "org.scalatest" %% "scalatest" % "3.2.9" % "test",
-    "org.flywaydb" % "flyway-core" % "7.11.2" % "test"
+    "org.flywaydb" % "flyway-core" % "7.11.3" % "test"
   )
 ).settings(commonSettings ++ publishSettings)
 
