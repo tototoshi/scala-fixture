@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 import play.api.Configuration
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 case class DatabaseConfiguration(driver: String, url: String, username: String, password: String)
 

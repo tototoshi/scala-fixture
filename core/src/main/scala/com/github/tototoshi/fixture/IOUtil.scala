@@ -1,8 +1,10 @@
 package com.github.tototoshi.fixture
 
+import scala.language.reflectiveCalls
+
 private[fixture] object IOUtil {
 
-  type Closable = { def close() }
+  type Closable = { def close(): Unit }
 
   def using[R <: Closable, A](resource: R)(f: R => A): A = {
     try {
