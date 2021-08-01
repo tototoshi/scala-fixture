@@ -6,7 +6,7 @@ lazy val nonPublishSettings = Seq(
 
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
-  publishArtifact in Test := false,
+  Test / publishArtifact := false,
   pomExtra :=
     <url>https://github.com/tototoshi/scala-fixture</url>
     <licenses>
@@ -36,7 +36,7 @@ lazy val commonSettings = Seq(
   crossScalaVersions := Seq("2.13.6", "2.12.13"),
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
-  parallelExecution in Test := false,
+  Test / parallelExecution := false,
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (version.value.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
