@@ -15,6 +15,7 @@ class FixtureTest extends AnyFunSuite with BeforeAndAfter {
     .configure()
     .dataSource(url, username, password)
     .locations("db/migration/default")
+    .cleanDisabled(false)
     .load()
 
   val fixture = Fixture(driver, url, username, password)
