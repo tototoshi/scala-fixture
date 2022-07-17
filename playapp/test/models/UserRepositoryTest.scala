@@ -14,6 +14,7 @@ class UserRepositoryTest extends FunSuite with BeforeAndAfterAll {
   val flyway = new Flyway()
   flyway.setDataSource(jdbc.url, jdbc.user, jdbc.password)
   flyway.setLocations("db/migration/default")
+  flyway.cleanDisabled(false)
 
   val fixture = Fixture(jdbc.driverName, jdbc.url, jdbc.user, jdbc.password)
     .scriptLocation("db/fixtures/default")
