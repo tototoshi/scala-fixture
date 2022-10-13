@@ -32,8 +32,8 @@ lazy val publishSettings = Seq(
 
 lazy val commonSettings = Seq(
   version := "0.5.0-SNAPSHOT",
-  scalaVersion := "2.13.9",
-  crossScalaVersions := Seq("2.13.9", "2.12.17"),
+  scalaVersion := "2.13.10",
+  crossScalaVersions := Seq("2.13.10", "2.12.17"),
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
   Test / parallelExecution := false,
