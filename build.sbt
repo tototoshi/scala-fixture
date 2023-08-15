@@ -50,7 +50,7 @@ lazy val core = Project(
 ).settings(
   name := "scala-fixture",
   libraryDependencies ++= Seq(
-    "com.h2database" % "h2" % "2.1.214" % "test",
+    "com.h2database" % "h2" % "2.2.220" % "test",
     "org.scalatest" %% "scalatest" % "3.2.13" % "test",
     "org.flywaydb" % "flyway-core" % "9.3.1" % "test"
   )
