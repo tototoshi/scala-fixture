@@ -7,7 +7,7 @@ private[fixture] class JavaFixtureScriptScanner(classLoader: ClassLoader, script
   override def scan(scriptName: String): Option[FixtureScript] = {
     try {
       val className = if (scriptPackage == "") scriptName else scriptPackage + "." + scriptName
-      Some(Class.forName(className, true, classLoader).newInstance().asInstanceOf[FixtureScript])
+      Some(Class.forName(className, true, classLoader).getConstructor().newInstance().asInstanceOf[FixtureScript])
     } catch {
       case e: ClassNotFoundException => None
     }
