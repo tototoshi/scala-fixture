@@ -31,14 +31,14 @@ case class Fixture(
   def setUp(): Unit = {
     val db = new Database(driver, url, username, password)
     IOUtil.using(db.getConnection()) { conn =>
-      scan.foreach { script => script.setUp(conn) }
+      scan().foreach { script => script.setUp(conn) }
     }
   }
 
   def tearDown(): Unit = {
     val db = new Database(driver, url, username, password)
     IOUtil.using(db.getConnection()) { conn =>
-      scan.reverse.foreach { script => script.tearDown(conn) }
+      scan().reverse.foreach { script => script.tearDown(conn) }
     }
   }
 
