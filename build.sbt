@@ -32,8 +32,8 @@ lazy val publishSettings = Seq(
 
 lazy val commonSettings = Seq(
   version := "0.5.0-SNAPSHOT",
-  scalaVersion := "2.13.12",
-  crossScalaVersions := Seq("2.13.12", "3.3.1"),
+  scalaVersion := "2.13.14",
+  crossScalaVersions := Seq("2.13.14", "3.3.1"),
   organization := "com.github.tototoshi",
   scalacOptions ++= Seq("-deprecation", "-language:_"),
   Test / parallelExecution := false,
@@ -52,7 +52,7 @@ lazy val core = Project(
   libraryDependencies ++= Seq(
     "com.h2database" % "h2" % "2.3.230" % "test",
     "org.scalatest" %% "scalatest" % "3.2.19" % "test",
-    "org.flywaydb" % "flyway-core" % "9.21.2" % "test"
+    "org.flywaydb" % "flyway-core" % "9.22.3" % "test"
   )
 ).settings(commonSettings ++ publishSettings)
 
